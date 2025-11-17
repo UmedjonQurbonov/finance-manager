@@ -6,8 +6,11 @@ def index(request):
     return render(request, 'index.html', {'transaction': transaction} )
 
 def view_all(request):
-    transaction = Transaction.objects.filter(user=request.user)
-    return render(request, 'view_all.html', {'transaction': transaction})
+    if request.user.is_authenticated:
+        transactions = Transaction.objects.filter(user=request.user)
+    else:
+        transactions = []
+    return render(request, 'view_all.html', {'transaction': transactions})
 
 def transaction_create_view(request):
     if request.method == 'POST':
