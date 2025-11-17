@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create Book{% endblock title %}
+
+{% block main %}
+{% if user.is_authenticated %}
+<div class="create-transaction">
+    <h2>Добавить транзакцию</h2>
+    <form method="POST" class="create-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Сумма</label>
+            <input type="number" name="amount" step="0.01" placeholder="Введите сумму" required>
+        </div>
+
+        <div class="form-group">
+            <label>Тип транзакции</label>
+            <select name="type" required>
+                <option value="income">Доход</option>
+                <option value="expense">Расход</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Категория</label>
+            <select name="category" required>
+
+                <option value="salary">Зарплата</option>
+                <option value="deposit">Проценты по вкладу</option>
+                <option value="transfer">Перевод</option>
+                <option value="business">Бизнес</option>
+
+                <option value="food">Продукты</option>
+                <option value="transport">Транспорт</option>
+                <option value="utilities">Коммунальные услуги</option>
+                <option value="rent">Аренда</option>
+                <option value="clothes">Одежда</option>
+                <option value="fun">Развлечения</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Описание</label>
+            <textarea name="description" placeholder="Комментарий"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Сохранить</button>
+    </form>
+</div>
+{% else %}
+<p>Сначала зарегистрируйтесь или войдите!</p>
+{% endif %}
+
+{% endblock main %}

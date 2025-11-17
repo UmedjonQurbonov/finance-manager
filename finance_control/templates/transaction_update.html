@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create Book{% endblock title %}
+
+{% block main %}
+{% if user.is_authenticated %}
+<div class="update-transaction">
+    <h2>Редактировать транзакцию</h2>
+    <form method="POST" class="update-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Сумма</label>
+            <input type="number" name="amount" value="{{ transaction.amount }}" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+            <label>Тип транзакции</label>
+            <select name="type" required>
+                <option value="income" {% if transaction.type == "income" %}selected{% endif %}>Доход</option>
+                <option value="expense" {% if transaction.type == "expense" %}selected{% endif %}>Расход</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Категория</label>
+            <select name="category" required>
+                <option value="salary" {% if transaction.category == 'salary' %}selected{% endif %}>Зарплата</option>
+                <option value="deposit" {% if transaction.category == 'deposit' %}selected{% endif %}>Проценты по вкладу</option>
+                <option value="transfer" {% if transaction.category == 'transfer' %}selected{% endif %}>Перевод</option>
+                <option value="business" {% if transaction.category == 'business' %}selected{% endif %}>Бизнес</option>
+
+                <option value="food" {% if transaction.category == 'food' %}selected{% endif %}>Продукты</option>
+                <option value="transport" {% if transaction.category == 'transport' %}selected{% endif %}>Транспорт</option>
+                <option value="utilities" {% if transaction.category == 'utilities' %}selected{% endif %}>Коммунальные услуги</option>
+                <option value="rent" {% if transaction.category == 'rent' %}selected{% endif %}>Аренда</option>
+                <option value="clothes" {% if transaction.category == 'clothes' %}selected{% endif %}>Одежда</option>
+                <option value="fun" {% if transaction.category == 'fun' %}selected{% endif %}>Развлечения</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Описание</label>
+            <textarea name="description">{{ transaction.description }}</textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">💾 Сохранить изменения</button>
+    </form>
+</div>
+{% else %}
+   <p>Сначала зарегистрируйтесь или войдите!</p>
+   {% endif %}
+
+{% endblock main %}

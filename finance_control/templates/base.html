@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>{% block title %}RentaCar{% endblock title %}</title>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <div class="logo-icon">₽</div>
+                <span class="logo-text">FinControl</span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="{% url 'index' %}"><span class="icon">🏠</span>Main</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'view_all' %}"><span class="icon">📊</span> Панель</a></li>
+                <li><a href="{% url 'analytics' %}"><span class="icon">📈</span> Аналитика</a></li>
+                {% endif %}
+                {% if not user.is_authenticated %}
+                <li><a href="{% url 'register' %}"><span class="icon">📝</span>Регистрация</a></li>
+                <li><a href="{% url 'login' %}"><span class="icon">🔐</span>Войти</a></li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}"><span class="icon">↩️</span>Выйти</a></li>
+                {% endif %}
+            </ul>
+
+            <div class="nav-icons">
+                <button class="icon-btn">
+                    <span class="icon">🔔</span>
+                    <span class="notification-dot"></span>
+                </button>
+                <button class="icon-btn">
+                    <span class="icon">👤</span>
+                </button>
+            </div>
+
+            <button class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        {% block main %}
+        {% endblock main %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">₽</div>
+                        <span class="logo-text" style="-webkit-text-fill-color: white;">FinControl</span>
+                    </a>
+                    <p>Ваш надежный помощник в управлении личными финансами</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Навигация</h3>
+                    <ul>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Возможности</a></li>
+                        <li><a href="#">Цены</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Ресурсы</h3>
+                    <ul>
+                        <li><a href="#">Документация</a></li>
+                        <li><a href="#">Блог</a></li>
+                        <li><a href="#">Поддержка</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Мы в соцсетях</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-btn">G</a>
+                        <a href="#" class="social-btn">T</a>
+                        <a href="#" class="social-btn">L</a>
+                        <a href="#" class="social-btn">✉</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 FinControl. Все права защищены.</p>
+                <div class="footer-links">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

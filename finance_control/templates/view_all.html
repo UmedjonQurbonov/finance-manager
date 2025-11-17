@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create Book{% endblock title %}
+
+{% block main %}
+
+{% if user.is_authenticated %}
+
+<div class="transactions-container">
+
+    <section class="block income-block">
+        <h2>Доходы</h2>
+
+        {% for t in transaction %}
+            {% if t.type == "income" %}
+                <div class="transaction-card">
+                    <div class="info">
+                        <p class="amount">+ {{ t.amount }} сомони</p>
+                        <p class="category">{{ t.get_category_display }}</p>
+                        <p class="description">{{ t.description }}</p>
+                        <p class="date">{{ t.created_at|date:"d.m.Y H:i" }}</p>
+                    </div>
+
+                    <div class="buttons">
+                        <a class="edit-btn" href="{% url 'transaction_update' t.id %}">Изменить</a>
+                        <a class="delete-btn" href="{% url 'transaction_delete' t.id %}">Удалить</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        <a href="{% url 'transaction_create' %}" class="add-btn">➕ Добавить доход</a>
+    </section>
+
+    <section class="block expense-block">
+        <h2>Расходы</h2>
+
+        {% for t in transaction %}
+            {% if t.type == "expense" %}
+                <div class="transaction-card">
+                    <div class="info">
+                        <p class="amount minus">- {{ t.amount }} сомони</p>
+                        <p class="category">{{ t.get_category_display }}</p>
+                        <p class="description">{{ t.description }}</p>
+                        <p class="date">{{ t.created_at|date:"d.m.Y H:i" }}</p>
+                    </div>
+
+                    <div class="buttons">
+                        <a class="edit-btn" href="{% url 'transaction_update' t.id %}">Изменить</a>
+                        <a class="delete-btn" href="{% url 'transaction_delete' t.id %}">Удалить</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        <a href="{% url 'transaction_create' %}" class="add-btn">➕ Добавить расход</a>
+    </section>
+</div>
+{% else %}
+    <p>Сначала зарегистрируйтесь или войдите!</p>
+    {% endif %}
+
+{% endblock main %}

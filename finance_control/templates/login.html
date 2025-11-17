@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create Book{% endblock title %}
+
+{% block main %}
+<div class="form-wrapper">
+    <h2>Login</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label for="">username</label>
+        <input type="text" name="username"  value="{{username}}">
+
+        <label for="">Password</label>
+        <input type="password" name="password">
+       
+        <button type="submit" class="btn">login</button>
+    </form>
+
+    <div class="back-link">
+        <a href="{% url 'index' %}">← Back to register list</a>
+    </div>
+</div>
+
+{% endblock main %}
